@@ -1,5 +1,6 @@
-#include<stdio.h>
-int main()
+#include "boo.h"
+
+int boo()
 {
     printf("boo...\n");
     return 0;
