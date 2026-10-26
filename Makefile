@@ -39,14 +39,16 @@ SRC_DIR := src
 LIB_DIR := lib
 LIBC_DIR := lib_c
 LIBH_DIR := lib_h
+CONF_DIR := config
 INC_DIR := include
 BUILD_DIR ?= build
 BIN_DIR ?= bin
+LOG_DIR ?= log
 TEST_DIR := tests
 
 # Compiler and Flags
 CC = gcc
-BASE_CFLAGS = -Wall -Wextra -std=c99 -I$(INC_DIR) -I$(LIB_DIR)$(DIR_SEP)$(LIBH_DIR)
+BASE_CFLAGS = -Wall -Wextra -std=c99 -I$(INC_DIR) -I$(LIB_DIR)$(DIR_SEP)$(LIBH_DIR) -I$(CONF_DIR)
 DEPFLAGS = -MMD -MP
 
 # Build Configuration: Run make BUILD=release or make BUILD=debug (default: debug)
@@ -72,7 +74,7 @@ DEPS = $(OBJS:.o=.d)
 # ------------------------------------------------------------------------------
 
 # Default target
-all: 
+all: $(LOG_DIR)
 	@echo "$(BUILD_MSG)"
 	@$(MAKE) -j$(nproc) $(BIN_DIR)$(DIR_SEP)$(TARGET)
 
@@ -93,7 +95,7 @@ $(BUILD_DIR)$(DIR_SEP)%.o: $(LIB_DIR)$(DIR_SEP)$(LIBC_DIR)$(DIR_SEP)%.c | $(BUIL
 	@$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
 	
 # Create required directories automatically using order-only prerequisites
-$(BUILD_DIR) $(BIN_DIR):
+$(BUILD_DIR) $(BIN_DIR) $(LOG_DIR):
 	@$(MKDIR) $@
 #Note- removed -p option from above line
 # Include auto-generated dependency files for header tracking
@@ -102,7 +104,7 @@ $(BUILD_DIR) $(BIN_DIR):
 # Clean up build artifacts
 clean:
 	@echo "Cleaning build artifacts..."
-	@$(RMDIR) $(BUILD_DIR) $(BIN_DIR)
+	@$(RMDIR) $(BUILD_DIR) $(BIN_DIR) $(LOG_DIR)
 
 # Phony targets prevent conflicts with files named 'all' or 'clean'
 .PHONY: all clean
