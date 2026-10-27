@@ -5,8 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
-#include "globals.h"
+#ifdef _WIN32
+	#include <direct.h>
+#elif _WIN64
+	#include <direct.h>
+#elif __linux__
+#endif
 
 typedef enum 
 {
@@ -16,12 +20,12 @@ typedef enum
 	LOG_DEBUG //3
 } LOG_LEVEL; //4
 
-
-int create_empty_log_file();
-int logger(char *msg);
-void log_info(char *f_name, char *msg);
-void log_warning(char *f_name, char *msg);
-void log_error(char *f_name, char *msg);
-void log_debug(char *f_name, char *msg);
+void get_log_file_path(char *file_path);
+void create_log_file(char *log_file_path);
+int logger(char *log_file_path, char *msg);
+void log_info(char *log_file_path, int time_stamp, char *f_name, char *msg);
+void log_warning(char *log_file_path, int time_stamp, char *f_name, char *msg);
+void log_error(char *log_file_path, int time_stamp, char *f_name, char *msg);
+void log_debug(char *log_file_path, int time_stamp, char *f_name, char *msg);
 
 #endif

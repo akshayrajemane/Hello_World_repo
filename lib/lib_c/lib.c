@@ -1,16 +1,24 @@
 #include "lib.h"
 
-int print_time_stamp()
+void get_time(double *time_s, double *time_ns)
 {
-	struct timespec end_time;
+	struct timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+	*time_s = (double)(time.tv_sec);
+	*time_ns = (double)(time.tv_nsec);
+}
+
+int get_time_stamp(double start_time_s, double start_time_ns)
+{
+	double curr_time_s, curr_time_ns;
 	double time_stamp = 0;
 	
-	clock_gettime(CLOCK_MONOTONIC, &end_time);
+	get_time(&curr_time_s, &curr_time_ns);
 	
-	time_stamp = (double)(end_time.tv_sec - start_time.tv_sec);
-	time_stamp *= 1e9;
+	time_stamp = (curr_time_s - start_time_s);
+	time_stamp *= 1e9; //Convert time stamp in ns
 	
-	time_stamp = time_stamp + (double)(end_time.tv_nsec - start_time.tv_nsec);
+	time_stamp = time_stamp + (curr_time_ns - start_time_ns); //Add precision to time stamp
 		
 	return((int)time_stamp);
 }

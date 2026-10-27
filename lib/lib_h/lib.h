@@ -1,11 +1,10 @@
-#ifndef MY_LIB
-#define  MY_LIB
+#ifndef LIB_H
+#define LIB_H
 
-#include<stdio.h>
+#include <stdio.h>
+#include <time.h>
 
-#include "config.h"
-#include "globals.h"
-
-int print_time_stamp();
+void get_time(double *time_s, double *time_ns);
+int get_time_stamp(double start_time_s, double start_time_ns);
 
 #endif
