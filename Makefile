@@ -4,30 +4,30 @@
 
 # ------Below code is not working------
 # Detect OS
-#ifeq ($(OS),Windows_NT)
-#    IS_WINDOWS := 1
-#else
-#    IS_WINDOWS := 0
-#endif
+ifeq ($(OS),Windows_NT)
+    IS_WINDOWS := 1
+else
+    IS_WINDOWS := 0
+endif
 
-#ifeq ($(IS_WINDOWS),1)
-#    RM := del /f /q
-#    RMDIR := rd /s /q
-#    MKDIR := mkdir
-#    DIR_SEP := \
-#else
-#    RM := rm -f
-#    RMDIR := rm -rf
-#    MKDIR := mkdir -p
-#    DIR_SEP := /
-#endif
+ifeq ($(IS_WINDOWS),0)
+    RM := rm -f
+    RMDIR := rm -rf
+    MKDIR := mkdir -p
+    DIR_SEP := /
+else
+    RM := del /f /q
+    RMDIR := rd /s /q
+    MKDIR := mkdir
+    DIR_SEP := /
+endif
 # -------------------------------------
 
 # ----Change this part manually for Windows and Linux env----
-RM := del /f /q
-RMDIR := rd /s /q
-MKDIR := mkdir
-DIR_SEP := /
+#RM := del /f /q
+#RMDIR := rd /s /q
+#MKDIR := mkdir
+#DIR_SEP := /
 # -------------------------------------------------------------
 
 # Project Name (current directory of Makefile)

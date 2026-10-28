@@ -5,7 +5,16 @@ void get_log_file_path(char *file_path)
 	if(getcwd(file_path, 1024) != NULL)
 	{
 		printf("CWD path = %s\n", file_path);
-		strcat(file_path, "\\log\\log.txt");
+		if(WIN32_OS || WIN64_OS)
+		{
+			strcat(file_path, "\\log\\log.txt");
+		}
+		
+		if(LIN_OS)
+		{
+			strcat(file_path, "/log/log.txt");
+		}
+			
 		printf("Log file path = %s\n", file_path);
 	}
 	else
